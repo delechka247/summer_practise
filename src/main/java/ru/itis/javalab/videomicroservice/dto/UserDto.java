@@ -12,11 +12,13 @@ import java.util.stream.Collectors;
 public class UserDto {
     private String userName;
     private String email;
+    private Integer age;
 
     public static UserDto from(User user) {
         return UserDto.builder()
                 .email(user.getEmail())
                 .userName(user.getUserName())
+                .age(user.getAge())
                 .build();
     }
 

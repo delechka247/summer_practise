@@ -24,4 +24,8 @@ public class FileInfo {
     private String url;
     @Enumerated(EnumType.STRING)
     private FileType fileType;
+
+    @ManyToOne
+    @JoinColumn(name = "topic_id", referencedColumnName = "id")
+    private Topic topic;
 }

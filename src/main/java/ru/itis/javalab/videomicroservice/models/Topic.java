@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -21,4 +22,6 @@ public class Topic {
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     private Course course;
 
+    @OneToMany(mappedBy = "topic")
+    private List<FileInfo> files;
 }

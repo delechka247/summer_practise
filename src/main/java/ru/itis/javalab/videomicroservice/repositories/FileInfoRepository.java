@@ -5,4 +5,5 @@ import ru.itis.javalab.videomicroservice.models.FileInfo;
 
 public interface FileInfoRepository extends JpaRepository<FileInfo, Long> {
     FileInfo findByAndStorageName(String fileName);
+//    List<FileInfo> findAllBy
 }

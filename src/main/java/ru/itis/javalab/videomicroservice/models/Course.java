@@ -21,8 +21,6 @@ public class Course {
     private Long id;
 
     private String name;
-    private Date dateOfCreation;
-    private Date dateOfBeginning;
 
     @ManyToOne
     @JoinColumn(name = "teacher_id",  referencedColumnName = "id")
