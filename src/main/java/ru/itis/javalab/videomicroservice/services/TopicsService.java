@@ -6,7 +6,7 @@ import ru.itis.javalab.videomicroservice.dto.TopicDto;
 import java.util.List;
 
 public interface TopicsService {
-    TopicDto addTopic(TopicDto topicDto);
+    TopicDto addTopic(TopicDto topicDto, Long courseId);
     TopicDto getTopicById(Long topicId);
     List<TopicDto> getTopicsByCourseId(Long courseId);
 }

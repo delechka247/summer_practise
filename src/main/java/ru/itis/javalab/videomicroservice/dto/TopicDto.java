@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 public class TopicDto {
     private Long id;
     private Course course;
+    private String name;
     private List<FileInfoDto> videoFiles;
     private List<FileInfoDto> textFiles;
 
@@ -29,6 +30,7 @@ public class TopicDto {
         TopicDto result = TopicDto.builder()
                 .id(topic.getId())
                 .course(topic.getCourse())
+                .name(topic.getName())
                 .textFiles(topic.getFiles().stream()
                         .filter(x -> x.getFileType().equals(FileType.SYNOPSES))
                         .map(x -> FileInfoDto.from(x))
