@@ -24,7 +24,7 @@ public class TopicDto {
     private Course course;
     private List<FileInfoDto> videoFiles;
     private List<FileInfoDto> textFiles;
-    
+
     public static TopicDto from(Topic topic) {
         TopicDto result = TopicDto.builder()
                 .id(topic.getId())
