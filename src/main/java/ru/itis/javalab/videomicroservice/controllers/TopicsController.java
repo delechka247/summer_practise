@@ -19,7 +19,7 @@ public class TopicsController {
     }
 
     @GetMapping("/courses/{course-id}/topics/{topic-id}")
-    public TopicDto getCoursesTopics(@PathVariable Long courseId, @PathVariable Long topicId) {
+    public TopicDto getCoursesTopic(@PathVariable Long courseId, @PathVariable Long topicId) {
         return topicsService.getTopicById(topicId);
     }
 
