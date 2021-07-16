@@ -28,6 +28,7 @@ public class TopicsServiceImpl implements TopicsService{
         Course course = coursesRepository.findById(courseId)
                 .orElseThrow(IllegalArgumentException::new);
         Topic newTopic = Topic.builder()
+                .name(topicDto.getName())
                 .course(course)
                 .build();
         topicsRepository.save(newTopic);

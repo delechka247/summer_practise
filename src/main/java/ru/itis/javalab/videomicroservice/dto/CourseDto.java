@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class CourseDto {
     private Long id;
     private String name;
-    private User teacher;
+    private UserDto teacher;
     private List<UserDto> curators;
     private List<UserDto> students;
     private List<TopicDto> topics;
@@ -29,7 +29,7 @@ public class CourseDto {
         CourseDto result = CourseDto.builder()
                 .id(course.getId())
                 .name(course.getName())
-                .teacher(course.getTeacher())
+                .teacher(UserDto.from(course.getTeacher()))
                 .curators(UserDto.from(course.getCurators()))
                 .students(UserDto.from(course.getStudents()))
                 .build();

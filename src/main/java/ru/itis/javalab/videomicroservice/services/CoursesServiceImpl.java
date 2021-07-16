@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.itis.javalab.videomicroservice.dto.CourseDto;
 import ru.itis.javalab.videomicroservice.models.Course;
+import ru.itis.javalab.videomicroservice.models.User;
 import ru.itis.javalab.videomicroservice.repositories.CoursesRepository;
+import ru.itis.javalab.videomicroservice.repositories.UsersRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +17,9 @@ public class CoursesServiceImpl implements CoursesService{
     @Autowired
     private CoursesRepository coursesRepository;
 
+    @Autowired
+    private UsersRepository usersRepository;
+
     @Override
     public List<CourseDto> getAllCourses() {
         return CourseDto.from(coursesRepository.findAll());
@@ -22,10 +27,11 @@ public class CoursesServiceImpl implements CoursesService{
 
     @Override
     public CourseDto addCourse(CourseDto courseDto) {
+        User teacher = usersRepository.findUserById(courseDto.getTeacher().getId());
         Course newCourse = Course.builder()
                 .name(courseDto.getName())
                 //TODO: брать препода из жвт токена, препод тот, кто создал курс
-                .teacher(courseDto.getTeacher())
+                .teacher(teacher)
                 .build();
         coursesRepository.save(newCourse);
         return CourseDto.from(newCourse);

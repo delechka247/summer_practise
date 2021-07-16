@@ -18,6 +18,11 @@ public class TopicsController {
         return topicsService.getTopicsByCourseId(courseId);
     }
 
+    @PostMapping("/courses/{course-id}/topics")
+    public TopicDto addCoursesTopic(@PathVariable Long courseId, @RequestBody TopicDto topicDto) {
+        return topicsService.addTopic(topicDto, courseId);
+    }
+
     @GetMapping("/courses/{course-id}/topics/{topic-id}")
     public TopicDto getCoursesTopic(@PathVariable Long courseId, @PathVariable Long topicId) {
         return topicsService.getTopicById(topicId);

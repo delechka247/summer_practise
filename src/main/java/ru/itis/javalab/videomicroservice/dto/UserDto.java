@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 @Data
 @Builder
 public class UserDto {
+    private Long id;
     private String userName;
     private String email;
     private Integer age;
