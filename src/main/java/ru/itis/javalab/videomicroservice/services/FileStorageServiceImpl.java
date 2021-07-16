@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+import ru.itis.javalab.videomicroservice.dto.FileInfoDto;
 import ru.itis.javalab.videomicroservice.models.FileInfo;
+import ru.itis.javalab.videomicroservice.models.Topic;
 import ru.itis.javalab.videomicroservice.repositories.FileInfoRepository;
+import ru.itis.javalab.videomicroservice.repositories.TopicsRepository;
 import ru.itis.javalab.videomicroservice.util.FileType;
 
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +18,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
@@ -22,6 +27,9 @@ public class FileStorageServiceImpl implements FileStorageService {
 
     @Autowired
     private FileInfoRepository fileInfoRepository;
+
+    @Autowired
+    private TopicsRepository topicsRepository;
 
     @Value("${storage.path}")
     private String storagePath;
@@ -75,5 +83,17 @@ public class FileStorageServiceImpl implements FileStorageService {
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }
+    }
+
+    @Override
+    public List<FileInfoDto> getAllVideosByTopic(Long topicId) {
+        Optional<Topic> topic = topicsRepository.findById(topicId);
+        return FileInfoDto.from(fileInfoRepository.findAllByTopicAndFileType(topic.get(), FileType.VIDEO));
+    }
+
+    @Override
+    public List<FileInfoDto> getAllSynopsesByTopic(Long topicId) {
+        Optional<Topic> topic = topicsRepository.findById(topicId);
+        return FileInfoDto.from(fileInfoRepository.findAllByTopicAndFileType(topic.get(), FileType.SYNOPSES));
     }
 }

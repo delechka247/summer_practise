@@ -6,6 +6,7 @@ import ru.itis.javalab.videomicroservice.dto.CourseDto;
 import ru.itis.javalab.videomicroservice.models.Course;
 import ru.itis.javalab.videomicroservice.repositories.CoursesRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -13,6 +14,11 @@ public class CoursesServiceImpl implements CoursesService{
 
     @Autowired
     private CoursesRepository coursesRepository;
+
+    @Override
+    public List<CourseDto> getAllCourses() {
+        return CourseDto.from(coursesRepository.findAll());
+    }
 
     @Override
     public CourseDto addCourse(CourseDto courseDto) {
