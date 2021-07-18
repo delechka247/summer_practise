@@ -12,8 +12,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-//TODO:
-
 @Service
 public class TopicsServiceImpl implements TopicsService{
 

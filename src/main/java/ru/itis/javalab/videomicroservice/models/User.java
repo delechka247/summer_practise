@@ -19,16 +19,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String userName;
-
+    private String firstName;
+    private String lastName;
     private Integer age;
-
     private String email;
-
-    private String password;
-
-    private String confirm_code;
+    private String hashPassword;
 
     @OneToMany(mappedBy = "teacher")
     private List<Course> teacherCourses;
@@ -39,7 +34,6 @@ public class User {
     @ManyToMany(mappedBy = "students")
     private List<Course> studentCourses;
 
-
     @Enumerated(value = EnumType.STRING)
     private State state;
     public enum State {
@@ -49,13 +43,7 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private Role role;
     public enum Role {
-        ADMIN, STUDENT, TEACHER, CURATOR
-    }
-
-    @Enumerated(value = EnumType.STRING)
-    private Status status;
-    public enum Status {
-        CONFIRMED, UNCONFIRMED
+        ADMIN, USER
     }
 
     public Boolean isActive() {
@@ -71,15 +59,7 @@ public class User {
     }
 
     public Boolean isUser() {
-        return this.role == Role.STUDENT;
-    }
-
-    public Boolean isConfirmed() {
-        return this.status == Status.CONFIRMED;
-    }
-
-    public Boolean isUnconfirmed() {
-        return this.status == Status.UNCONFIRMED;
+        return this.role == Role.USER;
     }
 
 }
