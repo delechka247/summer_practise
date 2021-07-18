@@ -25,6 +25,9 @@ public class TopicDto {
     private String name;
     private List<FileInfoDto> videoFiles;
     private List<FileInfoDto> textFiles;
+    private List<TestDto> tests;
+
+    private CourseDto course;
 
     public static TopicDto from(Topic topic) {
         TopicDto result = TopicDto.builder()
@@ -39,6 +42,8 @@ public class TopicDto {
                         .filter(x -> x.getFileType().equals(FileType.VIDEO))
                         .map(x -> FileInfoDto.from(x))
                         .collect(Collectors.toList()))
+                .tests(TestDto.from(topic.getTests()))
+                .course(CourseDto.from(topic.getCourse()))
                 .build();
         return result;
     }

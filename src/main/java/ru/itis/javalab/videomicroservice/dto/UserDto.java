@@ -20,6 +20,10 @@ public class UserDto {
     private String firstName;
     private String lastName;
 
+    private List<TestDto> createdTests;
+
+    private List<ResultDto> results;
+
     public static UserDto from(User user) {
         UserDto result = UserDto.builder()
                 .id(user.getId())
@@ -27,6 +31,8 @@ public class UserDto {
                 .age(user.getAge())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
+                .createdTests(TestDto.from(user.getCreatedTests()))
+                .results(ResultDto.from(user.getResults()))
                 .build();
         return result;
     }

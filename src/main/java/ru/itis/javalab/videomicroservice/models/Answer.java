@@ -13,21 +13,27 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Topic {
+@Table(name = "answers")
+public class Answer {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String content;
+
+    @Enumerated(EnumType.STRING)
+    private Accuracy accuracy;
+
+    public enum Accuracy {
+        RIGHT, FALSE
+    }
 
     @ManyToOne
-    @JoinColumn(name = "course_id", referencedColumnName = "id")
-    private Course course;
+    @JoinColumn(name = "question_id")
+    private Question question;
 
-    @OneToMany(mappedBy = "topic")
-    private List<FileInfo> files;
-
-    @OneToMany(mappedBy = "topic")   //Daniyar
-    private List<Test> tests;
+    @OneToMany(mappedBy = "answer")
+    private List<Result> results;
 
 }

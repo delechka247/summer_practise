@@ -3,7 +3,10 @@ package ru.itis.javalab.videomicroservice.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.itis.javalab.videomicroservice.dto.UserDto;
-import ru.itis.javalab.videomicroservice.models.User;
+import ru.itis.javalab.videomicroservice.models.Result;
+import ru.itis.javalab.videomicroservice.models.Test;
+import ru.itis.javalab.videomicroservice.repositories.ResultsRepository;
+import ru.itis.javalab.videomicroservice.repositories.TestsRepository;
 import ru.itis.javalab.videomicroservice.repositories.UsersRepository;
 import ru.itis.javalab.videomicroservice.security.jwt.utils.JwtDecoder;
 
@@ -18,6 +21,12 @@ public class UsersServiceImpl implements UsersService{
     @Autowired
     private JwtDecoder jwtDecoder;
 
+    @Autowired
+    private TestsRepository testsRepository;
+
+    @Autowired
+    private ResultsRepository resultsRepository;
+
     @Override
     public List<UserDto> getAllUsers() {
         return UserDto.from(usersRepository.findAll());
@@ -26,6 +35,18 @@ public class UsersServiceImpl implements UsersService{
     @Override
     public UserDto getUserFromJwt(String token) {
         return UserDto.from(jwtDecoder.getUserFromJwt(token));
+    }
+
+    @Override
+    public UserDto findUserByTestId(Long testId) {      //my
+        Test test = testsRepository.findById(testId).orElseThrow(IllegalArgumentException::new);
+        return UserDto.from(usersRepository.findUserByCreatedTestsContains(test).orElseThrow(IllegalArgumentException::new));
+    }
+
+    @Override
+    public UserDto getUserByResultId(Long resultId) {
+        Result result = resultsRepository.findById(resultId).orElseThrow(IllegalArgumentException::new);
+        return UserDto.from(usersRepository.findUserByResultsContains(result).orElseThrow(IllegalArgumentException::new));
     }
 
 }

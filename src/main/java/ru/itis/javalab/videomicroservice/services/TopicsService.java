@@ -9,4 +9,5 @@ public interface TopicsService {
     TopicDto addTopic(TopicDto topicDto, Long courseId);
     TopicDto getTopicById(Long topicId);
     List<TopicDto> getTopicsByCourseId(Long courseId);
+    TopicDto getTopicByTestId(Long testId);
 }

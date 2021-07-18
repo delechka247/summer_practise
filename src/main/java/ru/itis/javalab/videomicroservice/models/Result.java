@@ -6,28 +6,32 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-public class Topic {
+@Table(name = "results")
+public class Result {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne
-    @JoinColumn(name = "course_id", referencedColumnName = "id")
-    private Course course;
+    @JoinColumn(name = "answer_id")
+    private Answer answer;
 
-    @OneToMany(mappedBy = "topic")
-    private List<FileInfo> files;
+    @Enumerated(EnumType.STRING)
+    private Correctness correctness;
 
-    @OneToMany(mappedBy = "topic")   //Daniyar
-    private List<Test> tests;
+    public enum Correctness {
+        CORRECT, INCORRECT
+    }
 
 }

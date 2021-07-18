@@ -46,6 +46,12 @@ public class User {
         ADMIN, USER
     }
 
+    @OneToMany(mappedBy = "creator")    //Daniyar
+    private List<Test> createdTests;
+
+    @OneToMany(mappedBy = "user")      //Daniyar
+    private List<Result> results;
+
     public Boolean isActive() {
         return this.state == State.ACTIVE;
     }

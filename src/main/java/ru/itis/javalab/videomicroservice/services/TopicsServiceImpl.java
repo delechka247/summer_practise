@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.itis.javalab.videomicroservice.dto.TopicDto;
 import ru.itis.javalab.videomicroservice.models.Course;
+import ru.itis.javalab.videomicroservice.models.Test;
 import ru.itis.javalab.videomicroservice.models.Topic;
 import ru.itis.javalab.videomicroservice.repositories.CoursesRepository;
+import ru.itis.javalab.videomicroservice.repositories.TestsRepository;
 import ru.itis.javalab.videomicroservice.repositories.TopicsRepository;
 
 import java.util.Collections;
@@ -20,6 +22,9 @@ public class TopicsServiceImpl implements TopicsService{
 
     @Autowired
     private CoursesRepository coursesRepository;
+
+    @Autowired
+    private TestsRepository testsRepository;
 
     @Override
     public TopicDto addTopic(TopicDto topicDto, Long courseId) {
@@ -51,5 +56,11 @@ public class TopicsServiceImpl implements TopicsService{
             topics = TopicDto.from(optionalCourse.get().getTopics());
         }
         return topics;
+    }
+
+    @Override
+    public TopicDto getTopicByTestId(Long testId) {
+        Test test = testsRepository.findById(testId).orElseThrow(IllegalArgumentException::new);
+        return TopicDto.from(topicsRepository.findTopicByTestsContains(test).orElseThrow(IllegalArgumentException::new));
     }
 }
