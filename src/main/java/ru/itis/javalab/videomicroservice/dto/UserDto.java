@@ -31,9 +31,13 @@ public class UserDto {
                 .age(user.getAge())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
-                .createdTests(TestDto.from(user.getCreatedTests()))
-                .results(ResultDto.from(user.getResults()))
                 .build();
+        if(user.getCreatedTests() != null) {
+            result.setCreatedTests(TestDto.from(user.getCreatedTests()));
+        }
+        if(user.getResults() != null) {
+            result.setResults(ResultDto.from(user.getResults()));
+        }
         return result;
     }
 

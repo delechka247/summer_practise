@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.itis.javalab.videomicroservice.dto.UserDto;
 import ru.itis.javalab.videomicroservice.models.Result;
 import ru.itis.javalab.videomicroservice.models.Test;
+import ru.itis.javalab.videomicroservice.models.User;
 import ru.itis.javalab.videomicroservice.repositories.ResultsRepository;
 import ru.itis.javalab.videomicroservice.repositories.TestsRepository;
 import ru.itis.javalab.videomicroservice.repositories.UsersRepository;
@@ -34,7 +35,20 @@ public class UsersServiceImpl implements UsersService{
 
     @Override
     public UserDto getUserFromJwt(String token) {
-        return UserDto.from(jwtDecoder.getUserFromJwt(token));
+        User user = jwtDecoder.getUserFromJwt(token);
+
+        return UserDto.builder()
+                .id(user.getId())
+                .age(user.getAge())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .email(user.getEmail())
+                .build();
+    }
+
+    @Override
+    public UserDto getUserById(Long id) {
+        return UserDto.from(usersRepository.findUserById(id).get());
     }
 
     @Override

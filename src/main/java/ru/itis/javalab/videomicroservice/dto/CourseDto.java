@@ -24,15 +24,23 @@ public class CourseDto {
     private List<UserDto> curators;
     private List<UserDto> students;
     private List<TopicDto> topics;
+    private InvitationsDto invitations;
+
 
     public static CourseDto from(Course course) {
         CourseDto result = CourseDto.builder()
                 .id(course.getId())
                 .name(course.getName())
-                .teacher(UserDto.from(course.getTeacher()))
-                .curators(UserDto.from(course.getCurators()))
-                .students(UserDto.from(course.getStudents()))
                 .build();
+        if(course.getTeacher() != null){
+            result.setTeacher(UserDto.from(course.getTeacher()));
+        }
+        if (course.getCurators() != null) {
+            result.setCurators(UserDto.from(course.getCurators()));
+        }
+        if (course.getStudents() != null) {
+            result.setStudents(UserDto.from(course.getStudents()));
+        }
         return result;
     }
 

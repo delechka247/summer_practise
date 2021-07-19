@@ -17,9 +17,11 @@ public class ProfileController {
     private UsersService usersService;
 
     @GetMapping("/profile")
+    @PreAuthorize("isAuthenticated()")
     @ApiOperation(value = "Получение информации о пользователе")
     public UserDto getProfilePage(@RequestHeader("TOKEN") String token, @RequestHeader("REFRESH-TOKEN") String refreshToken) {
-        return usersService.getUserFromJwt(token);
+        Long userId = usersService.getUserFromJwt(token).getId();
+        return usersService.getUserById(userId);
     }
 
 

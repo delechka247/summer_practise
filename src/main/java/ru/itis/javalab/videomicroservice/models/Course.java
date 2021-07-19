@@ -41,4 +41,8 @@ public class Course {
     @OneToMany
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     private List<Topic> topics;
+
+    @OneToMany
+    @JoinColumn(name = "course_id", referencedColumnName = "id")
+    private List<Invitation> invitations;
 }
